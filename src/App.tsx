@@ -1,25 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import AnalyticsPage from 'pages/Analytics';
+import { Redirect, Route, Switch } from 'react-router';
+import BlockExplorer from 'pages/BlockExplorer';
+import NetworkMonitor from 'pages/NetworkMonitor';
+
+export const APP_ROUTES = [
+  {
+    path: '/analytics',
+    component: AnalyticsPage,
+    title: 'analytics',
+  },
+  {
+    path: '/block-explorer',
+    component: BlockExplorer,
+    title: 'Block Explorer',
+  },
+  {
+    path: '/network-monitor',
+    component: NetworkMonitor,
+    title: 'Network Monitor',
+  },
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+      {APP_ROUTES.map((route) => (
+        <Route
+          key={route.path}
+          path={route.path}
+          component={route.component}
+          exact
+        />
+      ))}
+      <Redirect from="/" to="/analytics" />
+    </Switch>
   );
 }
 
